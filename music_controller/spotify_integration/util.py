@@ -2,11 +2,10 @@ from .models import SpotifyToken
 from django.utils import timezone
 from datetime import timedelta
 from django.utils.timezone import now
-
-from .credentials import CLIENT_ID, CLIENT_SECRET, REDIRECT_URI
+from decouple import config
 from requests import get, post, put
 
-BASE_URL = "https://api.spotify.com/v1/me"
+BASE_URL = config("BASE_URL")
 
 
 def get_user_tokens(session_id):
@@ -29,15 +28,17 @@ def update_or_create_user_tokens(
         tokens.access_token = access_token
         tokens.expires_in = expires_in
         tokens.token_type = token_type
-        
+
         # Only update the refresh_token if it's provided
         if refresh_token:
             tokens.refresh_token = refresh_token
-        
+
         print(tokens.access_token, tokens.refresh_token, tokens.expires_in)
         tokens.save(
-            update_fields=["access_token", "expires_in", "token_type"] +
-            (["refresh_token"] if refresh_token else [])  # Add refresh_token to update_fields only if not None
+            update_fields=["access_token", "expires_in", "token_type"]
+            + (
+                ["refresh_token"] if refresh_token else []
+            )  # Add refresh_token to update_fields only if not None
         )
     else:
         # Create a new token entry
@@ -70,8 +71,8 @@ def refresh_spotify_token(session_id):
         data={
             "grant_type": "refresh_token",
             "refresh_token": refresh_token,
-            "client_id": CLIENT_ID,
-            "client_secret": CLIENT_SECRET,
+            "client_id": config("CLIENT_ID"),
+            "client_secret": config("CLIENT_SECRET"),
         },
     ).json()
 
@@ -99,16 +100,19 @@ def execute_spotify_api_request(session_id, endpoint, post_=False, put_=False):
         return response.json()
     except:
         return {"Error": "issue with request"}
-    
+
+
 def play_song(session_id):
     response = execute_spotify_api_request(session_id, "player/play", put_=True)
     print(f"Play song response: {response}")  # Debugging
     return response
 
+
 def pause_song(session_id):
     response = execute_spotify_api_request(session_id, "player/pause", put_=True)
     print(f"Pause song response: {response}")  # Debugging
     return response
+
 
 def skip_song(session_id):
     response = execute_spotify_api_request(session_id, "player/next", post_=True)

@@ -81,6 +81,7 @@ pyparsing==3.2.0
 pyserial==3.5
 python-box==6.1.0
 python-dateutil==2.9.0.post0
+python-decouple==3.8
 pytz==2024.2
 PyYAML==6.0.2
 referencing==0.35.1

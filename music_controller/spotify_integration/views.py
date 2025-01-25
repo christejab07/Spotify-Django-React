@@ -1,5 +1,5 @@
 from django.shortcuts import redirect
-from .credentials import REDIRECT_URI, CLIENT_ID, CLIENT_SECRET
+from decouple import config
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
@@ -19,8 +19,8 @@ class AuthURL(APIView):
                 params={
                     "scope": scopes,
                     "response_type": "code",
-                    "redirect_uri": REDIRECT_URI,
-                    "client_id": CLIENT_ID,
+                    "redirect_uri": config('REDIRECT_URI'),
+                    "client_id": config('CLIENT_ID'),
                 },
             )
             .prepare()
@@ -40,9 +40,9 @@ def spotify_callback(request, format=None):
         data={
             "grant_type": "authorization_code",
             "code": code,
-            "redirect_uri": REDIRECT_URI,
-            "client_id": CLIENT_ID,
-            "client_secret": CLIENT_SECRET,
+            "redirect_uri": config("REDIRECT_URI"),
+            "client_id": config("CLIENT_ID"),
+            "client_secret": config("CLIENT_SECRET"),
         },
     ).json()
     print(response)

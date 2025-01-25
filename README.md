@@ -6,7 +6,7 @@ This project combines a Django backend with a React frontend to develop a spotif
 
 - Backend: Django (Python) with a REST API.
 - Frontend: React (JavaScript) for the user interface.
-- Database: SQLite (or any preferred database).
+- Database: SQLite (or any preferred database, change the settings.py file accordingly).
 - Authentication and dynamic routing.
 
 ---
@@ -100,24 +100,9 @@ npm start
 # or
 yarn start
 ```
+The frontend will be available at http://localhost:3000.
 
-## Running Tests
-
-### 1. For the backend:
-
-```bash
-python manage.py test
-```
-
-### 2. For the frontend:
-
-```bash
-npm test
-# or
-yarn test
-```
-
-### 3. Building the React Frontend for Production
+### 4. Building the React Frontend for Production
 
 ```bash
 npm run build
