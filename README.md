@@ -29,6 +29,7 @@ Make sure you have the following installed on your machine:
 ```bash
 git clone <repository-url>
 cd <repository-folder>
+cd music_controller
 ```
 
 ### 2. Setting Up the Backend (Django)
@@ -102,7 +103,7 @@ yarn start
 ```
 The frontend will be available at http://localhost:3000.
 
-### 4. Building the React Frontend for Production
+#### d. Building the React Frontend for Production
 
 ```bash
 npm run build
