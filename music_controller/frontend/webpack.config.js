@@ -1,5 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   entry: "./src/index.js",
@@ -30,13 +31,17 @@ module.exports = {
   },
   optimization: {
     minimize: true,
+    splitChunks: {
+      chunks: 'all',
+    }
   },
   plugins: [
     new webpack.DefinePlugin({
       "process.env": {
         // This has effect on the react lib size
-        NODE_ENV: JSON.stringify("development"),
+        NODE_ENV: JSON.stringify("production"),
       },
     }),
+    new BundleAnalyzerPlugin(),
   ],
 };
