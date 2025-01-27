@@ -26,12 +26,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = [
-    # '0.0.0.0'
-    # ip address of the device
-    "127.0.0.1",
-    "localhost",
-]
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default="127.0.0.1, localhost").split(',')
 
 
 # Application definition
@@ -129,7 +124,7 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "frontend/static"),
-    os.path.join(BASE_DIR, "frontend/build/static"),
+
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
